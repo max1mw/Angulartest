@@ -1,0 +1,37 @@
+
+    <form
+      nz-form
+      nzLayout="horizontal"
+      [formGroup]="validateForm"
+      (ngSubmit)="submitForm()">
+
+      <nz-form-item>
+        <nz-form-label >Title</nz-form-label>
+        <nz-form-control  nzErrorTip="Please input book title!">
+          <input nz-input formControlName="title" placeholder="input placeholder" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label >Price</nz-form-label>
+        <nz-form-control  nzErrorTip="Please input book price!">
+          <input nz-input formControlName="price" placeholder="input placeholder" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label >Pages</nz-form-label>
+        <nz-form-control  nzErrorTip="Please input book pages!">
+          <input nz-input formControlName="nbPages" placeholder="input placeholder" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label >Description</nz-form-label>
+        <nz-form-control  nzErrorTip="Please input book description!">
+          <textarea nz-input formControlName="description" placeholder="input placeholder" ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control >
+          <button nz-button nzType="primary">Otpraviti</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
