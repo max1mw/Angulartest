@@ -1,4 +1,4 @@
-import {Component, Injectable, Input, OnInit} from '@angular/core';
+import {Component, Injectable, Input, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {provideRoutes} from "@angular/router";
 import {BookComponent} from "../../book/book.component";
@@ -22,6 +22,8 @@ interface Book {
 @Injectable({providedIn:'root'})
 export class WelcomeComponent {
 
+  visible=false;
+
   constructor(public bookComponent: BookComponent) {
     this.showBook();
   }
@@ -29,7 +31,7 @@ export class WelcomeComponent {
   bookDetails = null as any;
 
 
-  public showBook(){
+ public showBook(){
     this.bookComponent.getBook().subscribe(
       (resp)=>{
       console.log(resp)
@@ -83,72 +85,36 @@ export class WelcomeComponent {
     }
   ];
 
-  isVisibleBookInfoModal = false;
-  isVisibleNewBookModal = false;
 
 
-  bookbyidinf= null as any;
+  @ViewChild(AddformComponent, { static: true }) child: AddformComponent | undefined;
 
   BookInfoModal(data : any): void {
-
-     this.bookbyidinf=data;
-    this.isVisibleBookInfoModal = true;
+this.child?.setBookInfo(data);
   }
-
 
   NewBookModal():void{
 
-    this.isVisibleNewBookModal = true;
-
+   this.child?.addnewBook();
   }
 
-  handleOkNewBookModal(): void {
-    console.log('Ok clicked!');
-    this.isVisibleNewBookModal = false;
-    this.showBook();
-  }
-
-  handleCancelNewBookModal(): void {
-    console.log('Cancel clicked!');
-    this.isVisibleNewBookModal = false;
-  }
-
-
-  handleOkBookInfoModal(): void {
-    console.log('Ok clicked!');
-    this.isVisibleBookInfoModal = false;
-  // this.bookbyidinf= null as any;
-  }
-
-  handleCancelBookInfoModal(): void {
-    console.log('Cancel clicked!');
-    this.isVisibleBookInfoModal = false;
-    //this.bookbyidinf= null as any;
+  UpdateBookModal(data:any):void{
+    this.child?.UpdateBookInfo(data);
   }
 
 
 
 
+  updateVisibility(visibility: boolean) {
+    this.visible = visibility;
+  }
 
-  // validateForm!: FormGroup;
-  //
-  //
-  //
-  //
-  // submitForm(): void {
-  //   if (this.validateForm.valid) {
-  //     console.log('submit', this.validateForm.value);
-  //   } else {
-  //     Object.values(this.validateForm.controls).forEach(control => {
-  //       if (control.invalid) {
-  //         control.markAsDirty();
-  //         control.updateValueAndValidity({ onlySelf: true });
-  //       }
-  //     });
-  //   }
-  // }
-
-
+  submit(submited: boolean) {
+    if (submited) {
+      this.showBook();
+      this.visible = false;
+    }
+  }
 
 
 

@@ -25,7 +25,7 @@ import {AddformComponent} from "../../addform/addform.component";
     CommonModule, NzButtonModule, NzIconModule, NzInputModule, NzModalModule, NzPopconfirmModule,
     NzFormModule, ReactiveFormsModule, FormsModule, NzRadioModule],
   declarations: [WelcomeComponent, AddformComponent],
-  exports: [WelcomeComponent]
+    exports: [WelcomeComponent, AddformComponent]
 })
 export class WelcomeModule {
 

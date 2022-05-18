@@ -3,12 +3,12 @@
 <nz-input-group  nzSearch [nzAddOnAfter]="suffixIconButton">
   <input style="width: 200px;" type="text" nz-input placeholder="input book title" />
   <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
-
 </nz-input-group>
 <br>
 
 <ng-template style="width: 200px;" #suffixIconButton>
   <button  nz-button nzType="primary"  nzGhost (click)="NewBookModal()">Add new Book</button>
+  <button nz-button nzType="primary"  nzGhost (click)="showBook()" ><i nz-icon nzType="reload" nzTheme="outline"></i></button>
 </ng-template>
 
 
@@ -36,7 +36,7 @@
 
 
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button nzType="default"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+      <button nz-button nzType="default" (click)="UpdateBookModal(data)"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
     <nz-divider nzType="vertical"></nz-divider>
      <button    nz-popconfirm
                 nzPopconfirmTitle="Are you sure delete this book?"
@@ -53,62 +53,36 @@
 
 
 
+<app-addform [visible]="visible"
+(visibilityEvent)="updateVisibility($event)"
+(submitEvent)="submit($event)"
+>
+
+</app-addform>
 
 
 
-<nz-modal [(nzVisible)]="isVisibleNewBookModal" nzTitle="Add New Book"(nzOnCancel)="handleCancelNewBookModal()" (nzOnOk)="handleOkNewBookModal()">
-<ng-container *nzModalContent >
-<app-addform></app-addform>
 
+<!--<nz-modal [(nzVisible)]="isVisibleNewBookModal" nzTitle="Add New Book"(nzOnCancel)="handleCancelNewBookModal()" (nzOnOk)="handleOkNewBookModal()">-->
+<!--<ng-container *nzModalContent >-->
+<!--<app-addform></app-addform>-->
 
-
-<!--  <div class="modalclass" >-->
-<!--    <h1>Add new book</h1>-->
-<!--    <form nz-form class="inputbookmen" [formGroup]="validateForm" (ngSubmit)="submitForm()">-->
-<!--      <nz-form-item>-->
-<!--        <nz-form-label>Title</nz-form-label>-->
-<!--        <nz-form-control>-->
-<!--          <input nz-input formControlName="title" id="title" [(ngModel)]="bookDetails.title">-->
-<!--        </nz-form-control>-->
-<!--      </nz-form-item>-->
-<!--      <nz-form-item>-->
-<!--        <nz-form-label>Price</nz-form-label>-->
-<!--        <nz-form-control>-->
-<!--        <input nz-input formControlName="price" id="price">-->
-<!--        </nz-form-control>-->
-<!--      </nz-form-item>-->
-<!--      <nz-form-item>-->
-<!--        <nz-form-label>Pages</nz-form-label>-->
-<!--        <nz-form-control>-->
-<!--          <input nz-input formControlName="nbPages" id="nbPages">-->
-<!--        </nz-form-control>-->
-<!--      </nz-form-item>-->
-<!--      <nz-form-item>-->
-<!--        <nz-form-label>Description</nz-form-label>-->
-<!--        <nz-form-control>-->
-<!--          <textarea nz-input formControlName="Description" id="Description"></textarea>-->
-<!--        </nz-form-control>-->
-<!--      </nz-form-item>-->
-<!--      <div class="form-group">-->
-<!--        <input type="submit" value="Register" class="btn btn-primary w-100">-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </div>-->
-</ng-container>
-</nz-modal>
+<!--</ng-container>-->
+<!--</nz-modal>-->
 
 
 
 
 
-<nz-modal [(nzVisible)]="isVisibleBookInfoModal" nzTitle="Book Info"(nzOnCancel)="handleCancelBookInfoModal()" (nzOnOk)="handleOkBookInfoModal()">
-  <ng-container *nzModalContent >
-    <div class="modalclass" >
-      <p>Book ID : {{bookbyidinf.bookId}}</p>
-      <p >Book Title: {{ bookbyidinf.title }}</p>
-      <p>Book price: {{ bookbyidinf.price }}</p>
-      <p>Book NbPages: {{ bookbyidinf.nbPages }}</p>
-      <p >Book Description: {{ bookbyidinf.description }}</p>
-    </div>
-  </ng-container>
-</nz-modal>
+<!--<nz-modal [(nzVisible)]="isVisibleBookInfoModal" nzTitle="Book Info"(nzOnCancel)="handleCancelBookInfoModal()" (nzOnOk)="handleOkBookInfoModal()">-->
+<!--  <ng-container *nzModalContent >-->
+<!--    <app-addform></app-addform>-->
+<!--&lt;!&ndash;    <div class="modalclass" >&ndash;&gt;-->
+<!--&lt;!&ndash;      <p>Book ID : {{bookbyidinf.bookId}}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;      <p >Book Title: {{ bookbyidinf.title }}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;      <p>Book price: {{ bookbyidinf.price }}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;      <p>Book NbPages: {{ bookbyidinf.nbPages }}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;      <p >Book Description: {{ bookbyidinf.description }}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </ng-container>-->
+<!--</nz-modal>-->

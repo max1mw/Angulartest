@@ -34,6 +34,9 @@ export class BookComponent{
 
   }
 
+  public updateBook(id:any,BookData:any){
+    return this.http.put("/tasktest1/test1/"+id,BookData);
+  }
 
 
 }

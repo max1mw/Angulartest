@@ -1,0 +1,63 @@
+<h1>Transaction log</h1>
+<nz-input-group  nzSearch [nzAddOnAfter]="suffixIconButton">
+  <input style="width: 200px;" type="text" nz-input placeholder="input text" />
+  <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+</nz-input-group>
+<br>
+
+<ng-template style="width: 200px;" #suffixIconButton>
+  <button  nz-button nzType="primary"  nzGhost (click)="NewTransactionModal()" >Add new Transaction</button>
+  <button  nz-button nzType="primary"  nzGhost (click)="showTransaction()"><i nz-icon nzType="reload" nzTheme="outline"></i></button>
+</ng-template>
+
+
+
+<br>
+<nz-table  #basicTable  [nzPageSize]="5" [nzData]="transactiondetail" >
+  <thead>
+  <tr>
+    <th *ngFor="let column of listOfColumn"  [nzSortFn]="column.compare" [nzSortPriority]="column.priority">
+      {{ column.title }}
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>{{ data.idDep }}</td>
+    <td>{{ data.borrowdate }}</td>
+    <td>{{ data.returndate }}</td>
+    <td>{{ data.isreturned }}</td>
+    <td><a (click)="BookInfoModal(data.book)">  {{ data.book.title | json }}</a></td>
+    <td>
+      <button nz-button nzType="default" (click)="showTransactionInfo(data)"><i nz-icon nzType="eye" nzTheme="outline"></i>
+      </button>
+
+
+      <nz-divider nzType="vertical"></nz-divider>
+      <button nz-button nzType="default" (click)="UpdateTransactioninfo(data)"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button    nz-popconfirm
+                 nzPopconfirmTitle="Are you sure delete this book?"
+                 nzPopconfirmPlacement="top"
+                 (nzOnConfirm)="deleteTransaction(data)"
+                 nz-button nzType="default" nzDanger>
+        <i nz-icon nzType="delete" nzTheme="outline"></i>
+      </button>
+
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<app-transaction-form  [visible]="visible"
+                       (visibilityEvent)="updateVisibility($event)"
+                       (submitEvent)="submit($event)"
+>
+</app-transaction-form>
+
+
+<app-addform [visible]="visible"
+                       (visibilityEvent)="updateVisibility($event)"
+                       (submitEvent)="submit($event)"
+>
+</app-addform>

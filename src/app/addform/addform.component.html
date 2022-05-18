@@ -1,9 +1,11 @@
-
+<nz-modal [(nzVisible)]="visible" nzTitle="{{formName}}"(nzOnCancel)="handleCancelBookModal()" (nzOnOk)="handleOkBookModal()">
+  <ng-container *nzModalContent >
     <form
       nz-form
       nzLayout="horizontal"
       [formGroup]="validateForm"
-      (ngSubmit)="submitForm()">
+      >
+      <!--      (ngSubmit)="submitForm()"-->
 
       <nz-form-item>
         <nz-form-label >Title</nz-form-label>
@@ -14,7 +16,7 @@
       <nz-form-item>
         <nz-form-label >Price</nz-form-label>
         <nz-form-control  nzErrorTip="Please input book price!">
-          <input nz-input formControlName="price" placeholder="input placeholder" />
+          <input nz-input formControlName="price" placeholder="input placeholder"  />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -26,12 +28,15 @@
       <nz-form-item>
         <nz-form-label >Description</nz-form-label>
         <nz-form-control  nzErrorTip="Please input book description!">
-          <textarea nz-input formControlName="description" placeholder="input placeholder" ></textarea>
+          <textarea nz-input formControlName="description" placeholder="input placeholder"  ></textarea>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-control >
-          <button nz-button nzType="primary">Otpraviti</button>
+          <button nz-button nzType="primary"  (click)="SuccesNotify('success')" (click)="buttonswap()">{{buttonname}}</button>
+
         </nz-form-control>
       </nz-form-item>
     </form>
+  </ng-container>
+</nz-modal>
