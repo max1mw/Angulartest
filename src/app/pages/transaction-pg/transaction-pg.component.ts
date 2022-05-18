@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {TransactionComponent} from "../../transaction/transaction.component";
 import {TransactionFormComponent} from "../../transaction-form/transaction-form.component";
 import {AddformComponent} from "../../addform/addform.component";
+import {WelcomeComponent} from "../welcome/welcome.component";
 
 
 interface Transaction {
@@ -22,9 +23,13 @@ export class TransactionPgComponent {
 
   visible=false;
 
-  constructor(public transaction:TransactionComponent) {
+  constructor(public transaction:TransactionComponent,public wel:WelcomeComponent) {
     this.showTransaction();
+    wel.showBook();
+
   }
+
+
 
   listOfColumn = [
     {
@@ -64,7 +69,10 @@ export class TransactionPgComponent {
 
   transactiondetail=null as any;
 
+
+  @ViewChild(WelcomeComponent, { static: true }) child3: WelcomeComponent | undefined;
   public showTransaction(){
+
     this.transaction.getTransaction().subscribe(
       (resp)=>{
         console.log(resp)
@@ -121,6 +129,8 @@ UpdateTransactioninfo(data:any):void{
       this.visible = false;
     }
   }
+
+
 
 
 }

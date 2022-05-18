@@ -33,6 +33,7 @@ this.register(this.validateForm.value);
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
+
     }
   }
 
@@ -41,6 +42,7 @@ this.register(this.validateForm.value);
       console.log('submit', this.validateForm.value);
 
       this.updateBook(this.validateForm.value.bookId,this.validateForm.value);
+
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -82,14 +84,19 @@ this.register(this.validateForm.value);
     });
   }
 
+detinfo=null as any;
 
   public updateBook(id:any,bookdata:any){
     this.bookComponent.updateBook(id,bookdata).subscribe(
       (resp) => {
         console.log(resp);
+        this.detinfo=resp;
+        this.bookcomp.listOfdata.push(this.detinfo)
+        this.SuccesNotify('success');
       },
       (err) => {
         console.log(err);
+        this.WrongNotify('error');
       }
     );
   }
@@ -109,9 +116,13 @@ this.register(this.validateForm.value);
     this.bookComponent.postBook(bookdata).subscribe(
       (resp) => {
         console.log("Succesfuly add")
+        this.SuccesNotify('success');
+        this.detinfo=resp;
+        this.bookcomp.listOfdata.push(this.detinfo)
       },
       (err) => {
         console.log(err);
+        this.WrongNotify('error');
       }
     );
   }
@@ -125,15 +136,14 @@ this.register(this.validateForm.value);
 addnewBook():void{
   this.validateForm = this.fb.group({
     title: [null, [Validators.required]],
-    price: [null, [Validators.required]],
-    nbPages:[null, [Validators.required]],
+    price: [null, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+    nbPages:[null, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
     description:[null, [Validators.required]]
   });
   this.submit="RegisterForm()";
   this.formName="Add new Book"
   this.buttonname="Register";
   this.visible=true;
-  this.child?.showBook();
 
 
 }
@@ -144,8 +154,8 @@ addnewBook():void{
     this.validateForm = this.fb.group({
       bookId:[data.bookId],
       title: [data.title, [Validators.required]],
-      price: [data.price, [Validators.required]],
-      nbPages:[data.nbPages, [Validators.required]],
+      price: [data.price, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      nbPages:[data.nbPages, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       description:[data.description, [Validators.required]]
     });
 
@@ -164,8 +174,8 @@ this.visible=true;
 
 
 
+
     this.formName="Update Book Info";
-    this.submit="UpdateForm()";
     this.buttonname="Update";
     this.validateForm.enable();
     this.visible=true;
@@ -173,15 +183,33 @@ this.visible=true;
 
   }
 
+  titleinfo=null as any;
+  // FindByTitleForm(data:any):void{
+  //
+  //   this.titleinfo= this.bookcomp.bookDetails.title.find(data);
+  //   this.setBookInfo(this.titleinfo);
+  //
+  //   this.formName="View Book Info";
+  //   this.buttonname="Ok";
+  //   this.visible=true;
+  //
+  // }
+
+  FindByTitlemet():void{
+
+  }
+
 
   handleOkBookModal(): void {
     console.log('Ok clicked!');
     this.updateVisibility(false);
+    this.bookcomp.showBook();
   }
 
   handleCancelBookModal(): void {
     console.log('Cancel clicked!');
     this.updateVisibility(false);
+    this.bookcomp.showBook();
   }
 
   handleOkBookInfoModal(): void {
@@ -203,5 +231,11 @@ this.visible=true;
       'The changes were successful'
     );
   }
+  WrongNotify(type: string): void {
+    this.notification.create(
+      type, '' +
+      'Error',
+      'Something wrong happened'
+    );}
 
 }

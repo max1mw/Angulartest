@@ -39,4 +39,9 @@ export class BookComponent{
   }
 
 
+  public findBookBytitle(booktitle:any){
+    return this.http.get('/tasktest1/test1/title/'+booktitle)
+  }
+
+
 }

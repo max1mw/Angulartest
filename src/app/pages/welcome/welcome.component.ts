@@ -1,4 +1,4 @@
-import {Component, Injectable, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Injectable, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {provideRoutes} from "@angular/router";
 import {BookComponent} from "../../book/book.component";
@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
 import {AddformComponent} from "../../addform/addform.component";
 
 interface Book {
+  bookId:number;
    title: string;
    price: number;
    nbPages: number;
@@ -23,23 +24,46 @@ interface Book {
 export class WelcomeComponent {
 
   visible=false;
+  title:string='';
 
-  constructor(public bookComponent: BookComponent) {
+  constructor(public bookComponent: BookComponent,
+              ) {
     this.showBook();
   }
 
-  bookDetails = null as any;
 
+//bookDetails:Book=[];
+  bookDetails=null as any;
+
+//   this.apartmentService.getApartments()
+// .subscribe(apartments => this.apartments = apartments);
+ @Input() listOfdata:Book[]=[]
 
  public showBook(){
-    this.bookComponent.getBook().subscribe(
-      (resp)=>{
-      console.log(resp)
-        this.bookDetails=resp;},
-      (err)=>{
-        console.log(err)
-      });
+    this.bookComponent.getBook()
+      .subscribe((resp)=>{
+          console.log(resp)
+          this.bookDetails=resp;
+this.listOfdata=this.bookDetails;
+
+
+        },
+        (err)=>{
+          console.log(err)
+        });
   }
+
+  ;
+
+
+
+
+
+  // public showBook(bookdet:Book[]):void{
+  //
+  //   this.bookComponent.getBook()
+  //     .subscribe((this.bookdet)=>{this.bookDetails=this.bookdet});
+  // }
 
 
   public deleteBook(data: any) {
@@ -86,7 +110,6 @@ export class WelcomeComponent {
   ];
 
 
-
   @ViewChild(AddformComponent, { static: true }) child: AddformComponent | undefined;
 
   BookInfoModal(data : any): void {
@@ -96,11 +119,36 @@ this.child?.setBookInfo(data);
   NewBookModal():void{
 
    this.child?.addnewBook();
+
+
   }
 
   UpdateBookModal(data:any):void{
     this.child?.UpdateBookInfo(data);
   }
+
+//   FindBookByTitle(data:any):void{
+// this.child?.FindByTitleForm(data);
+//
+//   }
+//
+
+  public FindBookByTitle(data:any){
+   // this.bookDetails=null;
+    this.bookComponent.findBookBytitle(data).subscribe(
+      (resp)=>{
+        console.log(resp)
+        this.listOfdata=[];
+        this.bookDetails=resp;
+        this.listOfdata.push(this.bookDetails);
+
+        },
+      (err)=>{
+        console.log(err)
+      });
+  }
+
+
 
 
 

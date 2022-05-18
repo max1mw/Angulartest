@@ -4,6 +4,7 @@ import {WelcomeComponent} from "../pages/welcome/welcome.component";
 import {TransactionComponent} from "../transaction/transaction.component";
 import {formatDate} from "@angular/common";
 import {NzNotificationService} from "ng-zorro-antd/notification";
+import {TransactionPgComponent} from "../pages/transaction-pg/transaction-pg.component";
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -43,7 +44,7 @@ export class TransactionFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               public welbook:WelcomeComponent,
               public transaction:TransactionComponent,
-              private notification: NzNotificationService) { }
+              private notification: NzNotificationService,public trans:TransactionPgComponent) { }
 
   ngOnInit(): void {
   }
@@ -67,9 +68,11 @@ export class TransactionFormComponent implements OnInit {
     this.transaction.postTransaction(transaction).subscribe(
       (resp) => {
         console.log("Succesfuly add")
+        this.SuccesNotify('success');
       },
       (err) => {
         console.log(err);
+        this.WrongNotify('error');
       }
     );
   }
@@ -89,6 +92,7 @@ export class TransactionFormComponent implements OnInit {
     if (this.validateForm.valid) {
       console.log('submit', transaction);
   this.register(transaction);
+
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -96,6 +100,7 @@ export class TransactionFormComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
+
     }
   }
 
@@ -114,6 +119,7 @@ export class TransactionFormComponent implements OnInit {
     if (this.validateForm.valid) {
       console.log('submit', transaction);
       this.updateTransaction(this.validateForm.value.id,transaction);
+
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -121,6 +127,7 @@ export class TransactionFormComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
+
     }
 
   }
@@ -196,9 +203,11 @@ export class TransactionFormComponent implements OnInit {
     this.transaction.updateTransaction(id,transactiondata).subscribe(
       (resp) => {
         console.log(resp);
+        this.SuccesNotify('success');
       },
       (err) => {
         console.log(err);
+        this.WrongNotify('error');
       }
     );
   }
@@ -217,11 +226,13 @@ export class TransactionFormComponent implements OnInit {
   handleOkTransactionModal(): void {
     console.log('Ok clicked!');
     this.updateVisibility(false);
+    this.trans.showTransaction();
   }
 
   handleCancelTransactionModal(): void {
     console.log('Cancel clicked!');
     this.updateVisibility(false);
+    this.trans.showTransaction();
   }
 
 
@@ -230,6 +241,14 @@ export class TransactionFormComponent implements OnInit {
       type, '' +
       'Successful',
       'The changes were successful'
+    );
+  }
+
+  WrongNotify(type: string): void {
+    this.notification.create(
+      type, '' +
+      'Error',
+      'Something wrong happened'
     );
   }
 

@@ -30,6 +30,7 @@ import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NzRadioModule} from "ng-zorro-antd/radio";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {WelcomeModule} from "./pages/welcome/welcome.module";
+import {NzInputNumberModule} from "ng-zorro-antd/input-number";
 
 
 registerLocaleData(en);
@@ -64,6 +65,7 @@ registerLocaleData(en);
         NzRadioModule,
         NzSelectModule,
         WelcomeModule,
+        NzInputNumberModule,
 
     ],
   providers: [{provide: NZ_I18N, useValue: en_US}],

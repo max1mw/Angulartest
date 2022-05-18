@@ -1,8 +1,8 @@
 <h1>Book Storage</h1>
 
 <nz-input-group  nzSearch [nzAddOnAfter]="suffixIconButton">
-  <input style="width: 200px;" type="text" nz-input placeholder="input book title" />
-  <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+  <input style="width: 200px;" [(ngModel)]="title"  type="text" nz-input placeholder="input book title" />
+  <button nz-button nzType="primary" nzSearch (click)="FindBookByTitle(title)" ><i nz-icon nzType="search"></i></button>
 </nz-input-group>
 <br>
 
@@ -14,10 +14,10 @@
 
 
 <br>
-<nz-table  #basicTable  [nzPageSize]="5" [nzData]="bookDetails">
+<nz-table  #basicTable  [nzPageSize]="5" [nzData]="listOfdata" >
   <thead>
   <tr>
-    <th *ngFor="let column of listOfColumn"  [nzSortFn]="column.compare" [nzSortPriority]="column.priority">
+    <th *ngFor="let column of listOfColumn"  [nzSortFn]="column.compare" [nzSortPriority]="column.priority" >
       {{ column.title }}
     </th>
   </tr>
@@ -50,6 +50,8 @@
   </tr>
   </tbody>
 </nz-table>
+
+
 
 
 

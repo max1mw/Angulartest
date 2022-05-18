@@ -16,14 +16,16 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NzRadioModule} from "ng-zorro-antd/radio";
 import {AddformComponent} from "../../addform/addform.component";
+import {NzDropDownModule} from "ng-zorro-antd/dropdown";
+import {NzInputNumberModule} from "ng-zorro-antd/input-number";
 
 
 
 
 @NgModule({
-  imports: [WelcomeRoutingModule, NzTableModule, NzDividerModule,
-    CommonModule, NzButtonModule, NzIconModule, NzInputModule, NzModalModule, NzPopconfirmModule,
-    NzFormModule, ReactiveFormsModule, FormsModule, NzRadioModule],
+    imports: [WelcomeRoutingModule, NzTableModule, NzDividerModule,
+        CommonModule, NzButtonModule, NzIconModule, NzInputModule, NzModalModule, NzPopconfirmModule,
+        NzFormModule, ReactiveFormsModule, FormsModule, NzRadioModule, NzDropDownModule, NzInputNumberModule],
   declarations: [WelcomeComponent, AddformComponent],
     exports: [WelcomeComponent, AddformComponent]
 })
